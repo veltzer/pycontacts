@@ -18,7 +18,7 @@ except ImportError:
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/contacts.readonly'
-CLIENT_SECRET_FILE = os.path.expanduser('~/.client_secret.json')
+CLIENT_SECRET_FILE = os.path.expanduser('~/.myworld/client_id.json')
 APPLICATION_NAME = 'People API Python Quickstart'
 
 
