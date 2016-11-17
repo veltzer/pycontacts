@@ -1,19 +1,12 @@
 #!/usr/bin/python3
 
 import os.path # for expanduser
-import httplib2
-import os
-
-from apiclient import discovery
-import oauth2client
-from oauth2client import client
-from oauth2client import tools
-
-try:
-    import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-except ImportError:
-    flags = None
+import httplib2 # for Http
+import os # for makedirs
+import os.path # for expanduser, join, exists
+import argparse # for ArgumentParser
+import oauth2client # for file, client, tools
+import apiclient # for discovery
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json
@@ -41,12 +34,12 @@ def get_credentials():
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        flow = oauth2client.client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME
         if flags:
-            credentials = tools.run_flow(flow, store, flags)
+            credentials = oauth2client.tools.run_flow(flow, store, flags)
         else: # Needed only for compatibility with Python 2.6
-            credentials = tools.run(flow, store)
+            credentials = oauth2client.tools.run(flow, store)
         print('Storing credentials to ' + credential_path)
     return credentials
 
@@ -56,9 +49,10 @@ def main():
     Creates a Google People API service object and outputs the name if
     available of 10 connections.
     """
+    flags = argparse.ArgumentParser(parents=[oauth2client.tools.argparser]).parse_args()
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
-    service = discovery.build('people', 'v1', http=http,
+    service = apiclient.discovery.build('people', 'v1', http=http,
         discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
 
     print('List 10 connection names')
@@ -83,12 +77,6 @@ def main():
     l.sort()
     for x in l:
         print(x)
-    '''
-    me = service.people().get(
-        resourceName='people/me',
-    ).execute()
-    print(me)
-    '''
 
 
 if __name__ == '__main__':
