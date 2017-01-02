@@ -15,7 +15,8 @@ import apiclient
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/contacts.readonly'
-CLIENT_SECRET_FILE = os.path.expanduser('~/.myworld/client_id.json')
+# CLIENT_SECRET_FILE = os.path.expanduser('~/.myworld/client_id.json')
+CLIENT_SECRET_FILE = os.path.expanduser('~/.client_secret.json')
 APPLICATION_NAME = 'People API Python Quickstart'
 
 
@@ -59,7 +60,10 @@ def main():
     service = apiclient.discovery.build('people', 'v1', http=http,
         discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
 
-    print('List 10 connection names')
+    print('List 10 contact names')
+    people = service.people()
+    print(dir(people))
+    connections=people.connections()
     results = service.people().connections().list(
         resourceName='people/me',
         pageSize=500,
