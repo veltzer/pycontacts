@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
-import os.path # for expanduser
-import httplib2 # for Http
-import os # for makedirs
-import os.path # for expanduser, join, exists
-import argparse # for ArgumentParser
-import oauth2client # for file, client, tools
-import apiclient # for discovery
+import os.path
+import httplib2
+import os
+import os.path
+import argparse
+import oauth2client
+import apiclient
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json

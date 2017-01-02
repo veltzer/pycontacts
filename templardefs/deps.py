@@ -1,6 +1,6 @@
-'''
+"""
 dependencies for this project
-'''
+"""
 
 def populate(d):
     d.requirements3=[
@@ -8,7 +8,7 @@ def populate(d):
         #'gdata-python-client',
     ]
 
-def getdeps():
+def get_deps():
     return [
         __file__, # myself
     ]
