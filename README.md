@@ -1,3 +1,3 @@
-# contacts-sync
+# pycontacts
 
 An application to sync my contacts with google
