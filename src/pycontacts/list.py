@@ -1,3 +1,9 @@
+"""
+This is based on:
+- https://developers.google.com/people/quickstart/python
+"""
+
+
 import os.path
 import httplib2
 import os
