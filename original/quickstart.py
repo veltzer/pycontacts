@@ -61,8 +61,7 @@ def main():
         discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
 
     print('List 10 connection names')
-    print(service.people().get())
-    results = service.people().list(resourceName='people/me',
+    results = service.people().connections().list(resourceName='people/me',
         pageSize=10).execute()
     connections = results.get('connections', [])
 
