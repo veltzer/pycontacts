@@ -3,3 +3,5 @@
 # python related
 __pycache__
 /.idea/workspace.xml
+/dist/
+*.egg-info/
