@@ -7,12 +7,9 @@ from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
 from oauth2client.file import Storage
+import argparse
 
-try:
-    import argparse
-    flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-except ImportError:
-    flags = None
+flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json
@@ -42,12 +39,10 @@ def get_credentials():
     if not credentials or credentials.invalid:
         flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
         flow.user_agent = APPLICATION_NAME
-        if flags:
-            credentials = tools.run_flow(flow, store, flags)
-        else: # Needed only for compatibility with Python 2.6
-            credentials = tools.run(flow, store)
+        credentials = tools.run_flow(flow, store, flags)
         print('Storing credentials to ' + credential_path)
     return credentials
+
 
 def main():
     """Shows basic usage of the Google People API.
@@ -58,11 +53,10 @@ def main():
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('people', 'v1', http=http,
-        discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
+                              discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
 
     print('List 10 connection names')
-    results = service.people().connections().list(resourceName='people/me',
-        pageSize=10).execute()
+    results = service.people().connections().list(resourceName='people/me', pageSize=10).execute()
     connections = results.get('connections', [])
 
     for person in connections:

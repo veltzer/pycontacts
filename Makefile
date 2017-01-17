@@ -20,7 +20,7 @@ Q=@
 #.SILENT:
 endif # DO_MKDBG
 
-# this line guarantees that if a receipe fails then the target file
+# this line guarantees that if a recipe fails then the target file
 # will be deleted.
 .DELETE_ON_ERROR:
 
