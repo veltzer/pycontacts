@@ -6,7 +6,7 @@ if not sys.version_info[0] == 3:
 
 setuptools.setup(
     name='pycontacts',
-    version='0.0.2',
+    version='0.0.3',
     description='pycontacts is a collection of utilities to help interact with google contacts',
     long_description='pycontacts helps you with various google contacts tasks',
     url='https://veltzer.github.io/pycontacts',
