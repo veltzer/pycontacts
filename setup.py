@@ -6,7 +6,7 @@ if not sys.version_info[0] == 3:
 
 setuptools.setup(
     name='pycontacts',
-    version='0.0.3',
+    version='0.0.4',
     description='pycontacts is a collection of utilities to help interact with google contacts',
     long_description='pycontacts helps you with various google contacts tasks',
     url='https://veltzer.github.io/pycontacts',
@@ -19,8 +19,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3',
     ],
     keywords='google contacts python',
-    package_dir={'': 'src'},
-    packages=setuptools.find_packages('src'),
+    packages=setuptools.find_packages(),
     install_requires=[
         'google-api-python-client',  # main client library
     ],
