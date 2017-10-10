@@ -1,1 +1,3 @@
-This is to make 'python setup.py sdist' happy...
+# pycontacts
+
+An application to sync my contacts with google
