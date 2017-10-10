@@ -1,18 +1,18 @@
 import setuptools
 
-import sys
-if not sys.version_info[0] == 3:
-    sys.exit("Sorry, only python version 3 is supported")
-
 setuptools.setup(
     name='pycontacts',
     version='0.0.4',
     description='pycontacts is a collection of utilities to help interact with google contacts',
     long_description='pycontacts helps you with various google contacts tasks',
-    url='https://veltzer.github.io/pycontacts',
+    url='https://github.com/veltzer/pycontacts',
+    download_url='https://github.com/veltzer/pycontacts',
     author='Mark Veltzer',
     author_email='mark.veltzer@gmail.com',
+    maintainer='Mark Veltzer',
+    maintainer_email='mark.veltzer@gmail.com',
     license='MIT',
+    platforms=['python3'],
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
