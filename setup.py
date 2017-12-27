@@ -5,7 +5,7 @@ setuptools.setup(
     version='0.0.4',
     description='pycontacts is a collection of utilities to help interact with google contacts',
     long_description='pycontacts helps you with various google contacts tasks',
-    url='https://github.com/veltzer/pycontacts',
+    url='https://veltzer.github.io/pycontacts',
     download_url='https://github.com/veltzer/pycontacts',
     author='Mark Veltzer',
     author_email='mark.veltzer@gmail.com',
