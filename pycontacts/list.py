@@ -67,7 +67,7 @@ def main():
     # connections = people.connections()
     results = service.people().connections().list(
         resourceName='people/me',
-        pageSize=500,
+        pageSize=50,
     ).execute()
     # debug
     # print(results.keys())
