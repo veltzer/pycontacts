@@ -17,9 +17,9 @@ import oauth2client.client
 
 # If modifying these scopes, delete your previously saved credentials
 # at ~/.credentials/people.googleapis.com-python-quickstart.json
+APPLICATION_NAME = 'pycontacts'
 SCOPES = 'https://www.googleapis.com/auth/contacts.readonly'
-CLIENT_SECRET_FILE = os.path.expanduser('~/.client_secret.json')
-APPLICATION_NAME = 'People API Python Quickstart'
+CLIENT_SECRET_FILE = os.path.expanduser('~/.client_secrets/{}.json'.format(APPLICATION_NAME))
 
 flags = argparse.ArgumentParser(parents=[oauth2client.tools.argparser]).parse_args()
 
@@ -37,8 +37,7 @@ def get_credentials():
     credential_dir = os.path.join(home_dir, '.credentials')
     if not os.path.exists(credential_dir):
         os.makedirs(credential_dir)
-    credential_path = os.path.join(credential_dir,
-                                   'people.googleapis.com-python-quickstart.json')
+    credential_path = os.path.join(credential_dir, '{}.json'.format(APPLICATION_NAME))
 
     store = oauth2client.file.Storage(credential_path)
     credentials = store.get()
@@ -61,13 +60,13 @@ def main():
     service = apiclient.discovery.build('people', 'v1', http=http,
                                         discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
 
-    print('List 10 contact names')
     people = service.people()
-    print(dir(people))
+    # print(dir(people))
     # connections = people.connections()
     results = service.people().connections().list(
         resourceName='people/me',
-        pageSize=50,
+        personFields="names",
+        pageSize=2000, # 2000 is the maximum
     ).execute()
     # debug
     # print(results.keys())
@@ -75,7 +74,7 @@ def main():
 
     l = []
     for person in connections:
-        print(person)
+        # print(person)
         # debug
         # print(person.keys())
         # rn=person['resourceName']
