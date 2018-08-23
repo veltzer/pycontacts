@@ -1,5 +1,5 @@
 """
-This is based on:
+This was based on:
 - https://developers.google.com/people/quickstart/python
 """
 
@@ -15,12 +15,10 @@ import oauth2client.tools
 import oauth2client.file
 import oauth2client.client
 
-# If modifying these scopes, delete your previously saved credentials
-# at ~/.credentials/people.googleapis.com-python-quickstart.json
+# https://developers.google.com/people/api/rest/v1/people/get
 APPLICATION_NAME = 'pycontacts'
 SCOPES = 'https://www.googleapis.com/auth/contacts.readonly'
 CLIENT_SECRET_FILE = os.path.expanduser('~/.client_secrets/{}.json'.format(APPLICATION_NAME))
-
 flags = argparse.ArgumentParser(parents=[oauth2client.tools.argparser]).parse_args()
 
 
@@ -50,15 +48,14 @@ def get_credentials():
 
 
 def main():
-    """Shows basic usage of the Google People API.
-
-    Creates a Google People API service object and outputs the name if
-    available of 10 connections.
-    """
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
-    service = apiclient.discovery.build('people', 'v1', http=http,
-                                        discoveryServiceUrl='https://people.googleapis.com/$discovery/rest')
+    service = apiclient.discovery.build(
+        'people',
+        'v1',
+        http=http,
+        discoveryServiceUrl='https://people.googleapis.com/$discovery/rest',
+    )
 
     people = service.people()
     # print(dir(people))

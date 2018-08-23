@@ -1,0 +1,3 @@
+- get to listing contact with a constant key.
+	there seems to be an option to create a key that will always work.
+- get all fields for every contact.
