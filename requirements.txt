@@ -1,5 +1,6 @@
 # THIS IS AN AUTO-GENERATED FILE. DO NOT EDIT!
 # production requirements
+httplib2
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib

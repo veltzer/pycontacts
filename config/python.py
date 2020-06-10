@@ -10,6 +10,7 @@ setup_requires = [
 ]
 
 run_requires = [
+    'httplib2',  # for the old example
     'google-api-python-client',  # for google API
     'google-auth-httplib2',  # for google API
     'google-auth-oauthlib',  # for google API

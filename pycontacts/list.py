@@ -60,16 +60,16 @@ def main():
     people = service.people()
     # print(dir(people))
     # connections = people.connections()
-    results = service.people().connections().list(
+    results = people.connections().list(
         resourceName='people/me',
         personFields="names",
-        pageSize=2000, # 2000 is the maximum
+        pageSize=2000,  # 2000 is the maximum
     ).execute()
     # debug
     # print(results.keys())
     connections = results.get('connections')
 
-    l = []
+    display_names = []
     for person in connections:
         # print(person)
         # debug
@@ -77,10 +77,10 @@ def main():
         # rn=person['resourceName']
         names = person['names']
         name = names[0].get('displayName')
-        l.append(name)
+        display_names.append(name)
 
-    l.sort()
-    for x in l:
+    display_names.sort()
+    for x in display_names:
         print(x)
 
 

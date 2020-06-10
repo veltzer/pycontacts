@@ -12,6 +12,7 @@ setuptools.setup(
     version="0.0.5",
     packages=[
         'pycontacts',
+        'pycontacts.endpoints',
     ],
     # from here all is optional
     description="pycontacts is a collection of utilities to help interact with google contacts",
@@ -33,6 +34,7 @@ setuptools.setup(
         'python3',
     ],
     install_requires=[
+        'httplib2',
         'google-api-python-client',
         'google-auth-httplib2',
         'google-auth-oauthlib',
