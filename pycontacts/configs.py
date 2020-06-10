@@ -1,44 +1,20 @@
 """
-All configurations for pymakehelper
+All configurations for pycontacts
 """
-
+import os
 
 from pytconf.config import Config, ParamCreator
 
 
-class ConfigSymlinkInstall(Config):
+class ConfigAuthFiles(Config):
     """
-    Parameters for the symlink install tool
+    Parameters for authentication files
     """
-    source_folder = ParamCreator.create_existing_folder(
-        help_string="Which folder to install from?",
+    client_secret = ParamCreator.create_existing_file(
+        help_string="Where are the credentials?",
+        default=os.path.expanduser("~/.config/pycontacts/client_secret.json")
     )
-    target_folder = ParamCreator.create_existing_folder(
-        help_string="Which folder to install to?",
-    )
-    recurse = ParamCreator.create_bool(
-        help_string="should I recurse?",
-        default=True,
-    )
-    doit = ParamCreator.create_bool(
-        help_string="actually perform the actions?",
-        default=True,
-    )
-    debug = ParamCreator.create_bool(
-        help_string="print what we are doing?",
-        default=True,
-    )
-    force = ParamCreator.create_bool(
-        help_string="remove target files if they are links?",
-        default=True,
-    )
-
-
-class ConfigRemoveFolders(Config):
-    """
-    Parameters for the remove folder tool
-    """
-    filenames = ParamCreator.create_list_str(
-
-
+    token = ParamCreator.create_str(
+        help_string="Where will we store the user access token?",
+        default=os.path.expanduser("~/.config/pycontacts/token.pickle")
     )
