@@ -14,6 +14,7 @@ run_requires = [
     'google-api-python-client',  # for google API
     'google-auth-httplib2',  # for google API
     'google-auth-oauthlib',  # for google API
+    'gdata-python3',  # we use the gdata API
     'pytconf',  # for command line parsing
     'pylogconf',  # for logging configuration
 ]

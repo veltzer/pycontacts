@@ -38,6 +38,7 @@ setuptools.setup(
         'google-api-python-client',
         'google-auth-httplib2',
         'google-auth-oauthlib',
+        'gdata-python3',
         'pytconf',
         'pylogconf',
     ],
