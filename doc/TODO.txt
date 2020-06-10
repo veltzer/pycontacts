@@ -1,3 +1,5 @@
+- make this project work with pytconf.
+- move to contacts api instead of people API.
 - get to listing contact with a constant key.
 	there seems to be an option to create a key that will always work.
 - get all fields for every contact.
