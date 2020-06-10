@@ -1,10 +1,11 @@
-/out
+/out/
 /tools.stamp
 # python related
 __pycache__
 /dist/
-*.egg-info/
+/*.egg-info/
 /.venv/
 __pycache__/
 *.py[cod]
 /.pydmt/
+/build/
