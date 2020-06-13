@@ -19,7 +19,7 @@ def register_all_groups():
 @register_main()
 def main():
     """
-    pycontacts will help you write makefiles
+    pycontacts is a collection of utilities to help interact with google contacts
     """
     pylogconf.core.setup()
     register_all_groups()

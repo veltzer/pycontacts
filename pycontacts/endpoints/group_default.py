@@ -90,7 +90,7 @@ def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
     ],
 )
 def fix_phones():
-    """ Fix the phone numbers in my contacts """
+    """ Fix the phone numbers so that parsed form equals presentation form """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -120,7 +120,7 @@ def fix_phones():
     ],
 )
 def show_bad_phones():
-    """ Show bad phones """
+    """ Show phones that google can't parse or are just weird """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
