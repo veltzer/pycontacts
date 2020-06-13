@@ -3,3 +3,5 @@
 - check to implement: check that every contact is either has a name
 	or a company with either a job description or department.
 - add a google map link to where every company is ?!?
+- find out why do I sometimes get an exception when calling the update method?
+	How can I avoid that?
