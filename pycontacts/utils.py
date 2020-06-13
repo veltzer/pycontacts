@@ -31,3 +31,12 @@ def flat_dump(obj) -> None:
         default=object_to_members_or_string,
         indent=1,
     )
+
+
+def dump(obj) -> None:
+    json.dump(
+        vars(obj),
+        fp=sys.stdout,
+        default=object_to_members_or_string,
+        indent=1,
+    )

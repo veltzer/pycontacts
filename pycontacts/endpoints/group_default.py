@@ -4,7 +4,9 @@ The default group of operations that pycontacts has
 import logging
 import os.path
 import pickle
+from typing import Generator
 
+from gdata.contacts import ContactEntry
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
@@ -18,6 +20,8 @@ import gdata.data
 import gdata.gauth
 import gdata.contacts.client
 import gdata.contacts.data
+
+from pycontacts.utils import dump
 
 GROUP_NAME_DEFAULT = "default"
 GROUP_DESCRIPTION_DEFAULT = "all pycontacts commands"
@@ -54,7 +58,81 @@ def version() -> None:
         ConfigAuthFiles,
     ],
 )
-def list_contacts():
+def list_contacts() -> None:
+    """ List all contacts """
+    token = get_token()
+    for entry in yield_all_entries(token):
+        dump(entry)
+
+
+def yield_all_entries(token) -> Generator[ContactEntry, None, None]:
+    query = gdata.contacts.client.ContactsQuery()
+    # see all parameters in :py:class:`gdata.query.ContactsQuery`
+    query.strict = True
+    # default is 25, too slow
+    query.max_results = 500
+    query.start_index = 0
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    while True:
+        feed = contacts_client.GetContacts(q=query)
+        if len(feed.entry) == 0:
+            break
+        query.start_index += len(feed.entry)
+        for entry in feed.entry:
+            yield entry
+
+
+@register_endpoint(
+    configs=[
+        ConfigAuthFiles,
+    ],
+)
+def fix_phones():
+    """ Fix the phone numbers in my contacts """
+    nones = 0
+    texts = []
+    token = get_token()
+    for entry in yield_all_entries(token):
+        numbers = entry.phone_number
+        for number in numbers:
+            if number.uri is None:
+                nones += 1
+                texts.append(number.text)
+            else:
+                formatted = number.uri.split(":")[1]
+                if number.text != formatted:
+                    print("diff {} {}".format(number.text, formatted))
+    print("got [{}] nones".format(nones))
+    print(texts)
+
+
+@register_endpoint(
+    configs=[
+        ConfigAuthFiles,
+    ],
+)
+def show_bad_phones():
+    """ Show bad phones """
+    nones = 0
+    texts = []
+    token = get_token()
+    for entry in yield_all_entries(token):
+        numbers = entry.phone_number
+        for number in numbers:
+            if number.uri is None:
+                if entry.organization is not None and number.text.startswith("*") and len(number.text) == 4:
+                    continue
+                if entry.organization is not None and number.text.startswith("1") and len(number.text) == 3:
+                    continue
+                show = None
+                if entry.title.text is not None:
+                    show = "title:{}".format(entry.title.text)
+                if entry.organization is not None:
+                    show = "organization:{}".format(entry.organization.name.text)
+                print("[{}] [{}]".format(show, number.text))
+
+
+def get_token():
     logger = logging.getLogger(pycontacts.LOGGER_NAME)
     credentials = None
     # The file token.pickle stores the user's access and refresh tokens, and is
@@ -89,14 +167,4 @@ def list_contacts():
         access_token=credentials.token,
         refresh_token=credentials.refresh_token,
     )
-    # see all parameters in :py:class:`gdata.query.ContactsQuery`
-    query = gdata.contacts.client.ContactsQuery()
-    query.strict = True
-    query.max_results = 1500
-
-    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
-    feed = contacts_client.GetContacts(q=query)
-    for entry in feed.entry:
-        print(entry.title.text)
-        # for e in entry.email:
-        #    print("\t"+e.address)
+    return token
