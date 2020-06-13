@@ -4,8 +4,9 @@ The default group of operations that pycontacts has
 import logging
 import os.path
 import pickle
-from typing import Generator
+from typing import Generator, Union
 
+from gdata.client import RequestError
 from gdata.contacts import ContactEntry
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -14,7 +15,7 @@ from pytconf.config import register_endpoint, register_function_group
 
 import pycontacts
 import pycontacts.version
-from pycontacts.configs import ConfigAuthFiles
+from pycontacts.configs import ConfigAuthFiles, ConfigFix
 
 import gdata.data
 import gdata.gauth
@@ -28,7 +29,7 @@ GROUP_DESCRIPTION_DEFAULT = "all pycontacts commands"
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = [
-    'https://www.googleapis.com/auth/contacts.readonly',
+    'https://www.googleapis.com/auth/contacts',
 ]
 APP_NAME = "pycontacts"
 
@@ -61,18 +62,18 @@ def version() -> None:
 def list_contacts() -> None:
     """ List all contacts """
     token = get_token()
-    for entry in yield_all_entries(token):
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    for entry in yield_all_entries(contacts_client):
         dump(entry)
 
 
-def yield_all_entries(token) -> Generator[ContactEntry, None, None]:
+def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
     query = gdata.contacts.client.ContactsQuery()
     # see all parameters in :py:class:`gdata.query.ContactsQuery`
     query.strict = True
     # default is 25, too slow
     query.max_results = 500
     query.start_index = 0
-    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     while True:
         feed = contacts_client.GetContacts(q=query)
         if len(feed.entry) == 0:
@@ -85,25 +86,32 @@ def yield_all_entries(token) -> Generator[ContactEntry, None, None]:
 @register_endpoint(
     configs=[
         ConfigAuthFiles,
+        ConfigFix,
     ],
 )
 def fix_phones():
     """ Fix the phone numbers in my contacts """
-    nones = 0
-    texts = []
     token = get_token()
-    for entry in yield_all_entries(token):
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    for entry in yield_all_entries(contacts_client):
         numbers = entry.phone_number
-        for number in numbers:
-            if number.uri is None:
-                nones += 1
-                texts.append(number.text)
-            else:
+        for i, number in enumerate(numbers):
+            if not is_special_phone(entry, number):
+                if number.uri is None:
+                    print("problem with [{}] [{}]".format(
+                        get_summary(entry),
+                        number.text,
+                    ))
+                    continue
                 formatted = number.uri.split(":")[1]
                 if number.text != formatted:
-                    print("diff {} {}".format(number.text, formatted))
-    print("got [{}] nones".format(nones))
-    print(texts)
+                    print("fixing [{}] ->[{}]".format(number.text, formatted))
+                    if ConfigFix.doit:
+                        entry.phone_number[i].text = formatted
+                        try:
+                            contacts_client.update(entry)
+                        except RequestError:
+                            print("failed to update")
 
 
 @register_endpoint(
@@ -113,23 +121,13 @@ def fix_phones():
 )
 def show_bad_phones():
     """ Show bad phones """
-    nones = 0
-    texts = []
     token = get_token()
-    for entry in yield_all_entries(token):
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    for entry in yield_all_entries(contacts_client):
         numbers = entry.phone_number
         for number in numbers:
-            if number.uri is None:
-                if entry.organization is not None and number.text.startswith("*") and len(number.text) == 4:
-                    continue
-                if entry.organization is not None and number.text.startswith("1") and len(number.text) == 3:
-                    continue
-                show = None
-                if entry.title.text is not None:
-                    show = "title:{}".format(entry.title.text)
-                if entry.organization is not None:
-                    show = "organization:{}".format(entry.organization.name.text)
-                print("[{}] [{}]".format(show, number.text))
+            if is_bad_phone(entry, number):
+                print("[{}] [{}]".format(get_summary(entry), number.text))
 
 
 def get_token():
@@ -168,3 +166,28 @@ def get_token():
         refresh_token=credentials.refresh_token,
     )
     return token
+
+
+def is_bad_phone(entry, number) -> bool:
+    if number.uri is None:
+        if is_special_phone(entry, number):
+            return False
+        return True
+    return False
+
+
+def is_special_phone(entry, number) -> bool:
+    if entry.organization is not None and number.text.startswith("*") and 4 <= len(number.text) <= 5:
+        return True
+    if entry.organization is not None and number.text.startswith("1") and len(number.text) == 3:
+        return True
+    return False
+
+
+def get_summary(entry) -> Union[None, str]:
+    show = None
+    if entry.title.text is not None:
+        show = "title:{}".format(entry.title.text)
+    if entry.organization is not None:
+        show = "organization:{}".format(entry.organization.name.text)
+    return show
