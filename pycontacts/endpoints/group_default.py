@@ -130,6 +130,60 @@ def show_bad_phones():
                 print("[{}] [{}]".format(get_summary(entry), number.text))
 
 
+def unfilled_contact(entry: ContactEntry) -> bool:
+    """
+    A contact which is unfilled is one which does not have
+    neither name or family name
+    :param entry:
+    :return:
+    """
+    if entry.email is not None:
+        if len(entry.email) >= 1:
+            if entry.email[0].address is not None:
+                return False
+    if entry.name is not None:
+        if entry.name.given_name is not None:
+            return False
+        if entry.name.family_name is not None:
+            return False
+    if entry.organization is not None:
+        if entry.organization.name is not None:
+            if entry.organization.name.text is not None:
+                return False
+        if entry.organization.department is not None:
+            if entry.organization.department.text is not None:
+                return False
+    return True
+
+
+@register_endpoint(
+    configs=[
+        ConfigAuthFiles,
+    ],
+)
+def dump_unfilled_contacts():
+    """ Show contacts that don't have the main fields filled """
+    token = get_token()
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    for entry in yield_all_entries(contacts_client):
+        if unfilled_contact(entry):
+            dump(entry)
+
+
+@register_endpoint(
+    configs=[
+        ConfigAuthFiles,
+    ],
+)
+def delete_unfilled_contacts():
+    """ Show contacts that don't have the main fields filled """
+    token = get_token()
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    for entry in yield_all_entries(contacts_client):
+        if unfilled_contact(entry):
+            contacts_client.delete(entry)
+
+
 def get_token():
     logger = logging.getLogger(pycontacts.LOGGER_NAME)
     credentials = None
