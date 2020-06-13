@@ -1,6 +1,7 @@
 """
 The default group of operations that pycontacts has
 """
+import logging
 import os.path
 import pickle
 
@@ -25,6 +26,7 @@ GROUP_DESCRIPTION_DEFAULT = "all pycontacts commands"
 SCOPES = [
     'https://www.googleapis.com/auth/contacts.readonly',
 ]
+APP_NAME = "pycontacts"
 
 
 def register_group_default():
@@ -53,11 +55,12 @@ def version() -> None:
     ],
 )
 def list_contacts():
+    logger = logging.getLogger(pycontacts.LOGGER_NAME)
     credentials = None
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists(ConfigAuthFiles.token):
+    if os.access(ConfigAuthFiles.token, os.R_OK):
         with open(ConfigAuthFiles.token, 'rb') as token:
             credentials = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
@@ -71,26 +74,29 @@ def list_contacts():
             )
             credentials = flow.run_local_server(port=0)
         # Save the credentials for the next run
+        logger.info("creating a new token file")
+        if os.access(ConfigAuthFiles.token, os.R_OK):
+            os.unlink(ConfigAuthFiles.token)
         with open(ConfigAuthFiles.token, 'wb') as token:
             pickle.dump(credentials, token)
-    # print(dir(credentials))
-    # print(credentials.token)
-    # print(credentials.refresh_token)
-    # print(credentials.client_id)
-    # print(credentials.client_secret)
-
+        os.chmod(ConfigAuthFiles.token, 0o400)
+    # flat_dump(credentials)
     token = gdata.gauth.OAuth2Token(
         client_id=credentials.client_id,
         client_secret=credentials.client_secret,
         scope=SCOPES[0],
-        user_agent='app.testing',
+        user_agent=APP_NAME,
         access_token=credentials.token,
         refresh_token=credentials.refresh_token,
     )
-    contact_client = gdata.contacts.client.ContactsClient()
-    token.authorize(contact_client)
-    feed = contact_client.GetContacts()
+    # see all parameters in :py:class:`gdata.query.ContactsQuery`
+    query = gdata.contacts.client.ContactsQuery()
+    query.strict = True
+    query.max_results = 1500
+
+    contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
+    feed = contacts_client.GetContacts(q=query)
     for entry in feed.entry:
         print(entry.title.text)
-        for e in entry.email:
-            print("\t"+e.address)
+        # for e in entry.email:
+        #    print("\t"+e.address)
