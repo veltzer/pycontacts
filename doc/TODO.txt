@@ -1,3 +1,8 @@
+- move to the new python API as per the
+	https://stackoverflow.com/questions/9969204/different-python-google-apis
+	document.
+	also document these issues somewhere.
+
 - check to implement: check that everyone who is really a contact
 	is a member of some group.
 - check to implement: check that every contact is either has a name
