@@ -12,7 +12,9 @@ pyclassifiers
 pypitools
 pydmt
 Sphinx
+black
 # test requirements
 pylint
 pytest
 pyflakes
+flake8

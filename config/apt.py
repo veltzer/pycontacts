@@ -7,7 +7,9 @@ import config.general
 # from user.personal import personal_slug
 
 apt_protocol = "https"
-apt_codename = subprocess.check_output(["lsb_release", "--codename", "--short"]).rstrip()
+apt_codename = subprocess.check_output(
+    ["lsb_release", "--codename", "--short"]
+).rstrip()
 apt_arch = subprocess.check_output(
     "dpkg-architecture | grep -e ^DEB_BUILD_ARCH= | cut -d = -f 2", shell=True
 ).rstrip()

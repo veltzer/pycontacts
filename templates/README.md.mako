@@ -21,7 +21,7 @@
 ![Downloads](https://pepy.tech/badge/${config.python.package_name}/month)
 ![Downloads](https://pepy.tech/badge/${config.python.package_name}/week)
 
-![linter](https://github.com/veltzer/${config.project.project_name}/workflows/linter/badge.svg)
+![linter](https://github.com/veltzer/${config.project.project_name}/workflows/build/badge.svg)
 
 ${config.project.project_short_description}
 

@@ -13,14 +13,14 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 
 from pytconf.config import register_endpoint, register_function_group
 
-import pycontacts
-import pycontacts.version
-from pycontacts.configs import ConfigAuthFiles, ConfigFix
-
 import gdata.data
 import gdata.gauth
 import gdata.contacts.client
 import gdata.contacts.data
+
+import pycontacts
+import pycontacts.version
+from pycontacts.configs import ConfigAuthFiles, ConfigFix
 
 from pycontacts.utils import dump
 
@@ -29,7 +29,7 @@ GROUP_DESCRIPTION_DEFAULT = "all pycontacts commands"
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = [
-    'https://www.googleapis.com/auth/contacts',
+    "https://www.googleapis.com/auth/contacts",
 ]
 APP_NAME = "pycontacts"
 
@@ -44,9 +44,7 @@ def register_group_default():
     )
 
 
-@register_endpoint(
-    group=GROUP_NAME_DEFAULT,
-)
+@register_endpoint(group=GROUP_NAME_DEFAULT,)
 def version() -> None:
     """
     Print version
@@ -54,11 +52,7 @@ def version() -> None:
     print(pycontacts.version.VERSION_STR)
 
 
-@register_endpoint(
-    configs=[
-        ConfigAuthFiles,
-    ],
-)
+@register_endpoint(configs=[ConfigAuthFiles,],)
 def list_contacts() -> None:
     """ List all contacts """
     token = get_token()
@@ -83,12 +77,7 @@ def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
             yield entry
 
 
-@register_endpoint(
-    configs=[
-        ConfigAuthFiles,
-        ConfigFix,
-    ],
-)
+@register_endpoint(configs=[ConfigAuthFiles, ConfigFix,],)
 def fix_phones():
     """ Fix the phone numbers so that parsed form equals presentation form """
     token = get_token()
@@ -98,10 +87,11 @@ def fix_phones():
         for i, number in enumerate(numbers):
             if not is_special_phone(entry, number):
                 if number.uri is None:
-                    print("problem with [{}] [{}]".format(
-                        get_summary(entry),
-                        number.text,
-                    ))
+                    print(
+                        "problem with [{}] [{}]".format(
+                            get_summary(entry), number.text,
+                        )
+                    )
                     continue
                 formatted = number.uri.split(":")[1]
                 if number.text != formatted:
@@ -114,11 +104,7 @@ def fix_phones():
                             print("failed to update")
 
 
-@register_endpoint(
-    configs=[
-        ConfigAuthFiles,
-    ],
-)
+@register_endpoint(configs=[ConfigAuthFiles,],)
 def show_bad_phones():
     """ Show phones that google can't parse or are just weird """
     token = get_token()
@@ -156,11 +142,7 @@ def unfilled_contact(entry: ContactEntry) -> bool:
     return True
 
 
-@register_endpoint(
-    configs=[
-        ConfigAuthFiles,
-    ],
-)
+@register_endpoint(configs=[ConfigAuthFiles,],)
 def dump_unfilled_contacts():
     """ Show contacts that don't have the main fields filled """
     token = get_token()
@@ -170,11 +152,7 @@ def dump_unfilled_contacts():
             dump(entry)
 
 
-@register_endpoint(
-    configs=[
-        ConfigAuthFiles,
-    ],
-)
+@register_endpoint(configs=[ConfigAuthFiles,],)
 def delete_unfilled_contacts():
     """ Show contacts that don't have the main fields filled """
     token = get_token()
@@ -191,7 +169,7 @@ def get_token():
     # created automatically when the authorization flow completes for the first
     # time.
     if os.access(ConfigAuthFiles.token, os.R_OK):
-        with open(ConfigAuthFiles.token, 'rb') as token:
+        with open(ConfigAuthFiles.token, "rb") as token:
             credentials = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not credentials or not credentials.valid:
@@ -199,15 +177,14 @@ def get_token():
             credentials.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                ConfigAuthFiles.client_secret,
-                SCOPES
+                ConfigAuthFiles.client_secret, SCOPES
             )
             credentials = flow.run_local_server(port=0)
         # Save the credentials for the next run
         logger.info("creating a new token file")
         if os.access(ConfigAuthFiles.token, os.R_OK):
             os.unlink(ConfigAuthFiles.token)
-        with open(ConfigAuthFiles.token, 'wb') as token:
+        with open(ConfigAuthFiles.token, "wb") as token:
             pickle.dump(credentials, token)
         os.chmod(ConfigAuthFiles.token, 0o400)
     # flat_dump(credentials)
@@ -231,9 +208,17 @@ def is_bad_phone(entry, number) -> bool:
 
 
 def is_special_phone(entry, number) -> bool:
-    if entry.organization is not None and number.text.startswith("*") and 4 <= len(number.text) <= 5:
+    if (
+        entry.organization is not None
+        and number.text.startswith("*")
+        and 4 <= len(number.text) <= 5
+    ):
         return True
-    if entry.organization is not None and number.text.startswith("1") and len(number.text) == 3:
+    if (
+        entry.organization is not None
+        and number.text.startswith("1")
+        and len(number.text) == 3
+    ):
         return True
     return False
 

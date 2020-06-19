@@ -3,33 +3,34 @@ import config.project
 package_name = config.project.project_name
 
 console_scripts = [
-    'pycontacts=pycontacts.endpoints.main:main',
+    "pycontacts=pycontacts.endpoints.main:main",
 ]
 
-setup_requires = [
-]
+setup_requires = []
 
 run_requires = [
-    'httplib2',  # for the old example
-    'google-api-python-client',  # for google API
-    'google-auth-httplib2',  # for google API
-    'google-auth-oauthlib',  # for google API
-    'gdata-python3',  # we use the gdata API
-    'pytconf',  # for command line parsing
-    'pylogconf',  # for logging configuration
+    "httplib2",  # for the old example
+    "google-api-python-client",  # for google API
+    "google-auth-httplib2",  # for google API
+    "google-auth-oauthlib",  # for google API
+    "gdata-python3",  # we use the gdata API
+    "pytconf",  # for command line parsing
+    "pylogconf",  # for logging configuration
 ]
 
 test_requires = [
-    'pylint',  # to check for lint errors
-    'pytest',  # for testing
-    'pyflakes',  # for testing
+    "pylint",  # to check for lint errors
+    "pytest",  # for testing
+    "pyflakes",  # for testing
+    "flake8",  # for testing
 ]
 
 dev_requires = [
-    'pyclassifiers',  # for programmatic classifiers
-    'pypitools',  # for upload etc
-    'pydmt',  # for building
-    'Sphinx',  # for the sphinx builder
+    "pyclassifiers",  # for programmatic classifiers
+    "pypitools",  # for upload etc
+    "pydmt",  # for building
+    "Sphinx",  # for the sphinx builder
+    "black",  # for code style
 ]
 
 install_requires = list(setup_requires)
