@@ -17,7 +17,9 @@
 ![Downloads](https://pepy.tech/badge/pycontacts/month)
 ![Downloads](https://pepy.tech/badge/pycontacts/week)
 
+![linter](https://github.com/veltzer/pycontacts/workflows/linter/badge.svg)
+
 pycontacts is a collection of utilities to help interact with google contacts
 
-project website: https://veltzer.github.io/pycontacts
+project website: <https://veltzer.github.io/pycontacts>
 
