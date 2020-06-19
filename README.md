@@ -1,5 +1,4 @@
 
-
 # *pycontacts* project by Mark Veltzer
 
 ![PyPI - Status](https://img.shields.io/pypi/status/pycontacts)
@@ -22,4 +21,3 @@
 pycontacts is a collection of utilities to help interact with google contacts
 
 project website: <https://veltzer.github.io/pycontacts>
-

@@ -1,9 +1,9 @@
-name: Lint Code Base
+name: linter
 on:
   push:
 jobs:
   build:
-    name: Lint Code Base
+    name: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -13,5 +13,6 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install setuptools
           python3 -m pip install -r requirements.txt
+          python3 -m pytest
       - name: Lint Code Base
         uses: github/super-linter@v2.0.0
