@@ -44,7 +44,7 @@ def register_group_default():
     )
 
 
-@register_endpoint(group=GROUP_NAME_DEFAULT,)
+@register_endpoint(group=GROUP_NAME_DEFAULT, )
 def version() -> None:
     """
     Print version
@@ -52,7 +52,7 @@ def version() -> None:
     print(pycontacts.version.VERSION_STR)
 
 
-@register_endpoint(configs=[ConfigAuthFiles,],)
+@register_endpoint(configs=[ConfigAuthFiles, ], )
 def list_contacts() -> None:
     """ List all contacts """
     token = get_token()
@@ -77,7 +77,7 @@ def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
             yield entry
 
 
-@register_endpoint(configs=[ConfigAuthFiles, ConfigFix,],)
+@register_endpoint(configs=[ConfigAuthFiles, ConfigFix, ], )
 def fix_phones():
     """ Fix the phone numbers so that parsed form equals presentation form """
     token = get_token()
@@ -104,7 +104,7 @@ def fix_phones():
                             print("failed to update")
 
 
-@register_endpoint(configs=[ConfigAuthFiles,],)
+@register_endpoint(configs=[ConfigAuthFiles, ], )
 def show_bad_phones():
     """ Show phones that google can't parse or are just weird """
     token = get_token()
@@ -142,7 +142,7 @@ def unfilled_contact(entry: ContactEntry) -> bool:
     return True
 
 
-@register_endpoint(configs=[ConfigAuthFiles,],)
+@register_endpoint(configs=[ConfigAuthFiles, ], )
 def dump_unfilled_contacts():
     """ Show contacts that don't have the main fields filled """
     token = get_token()
@@ -152,7 +152,7 @@ def dump_unfilled_contacts():
             dump(entry)
 
 
-@register_endpoint(configs=[ConfigAuthFiles,],)
+@register_endpoint(configs=[ConfigAuthFiles, ], )
 def delete_unfilled_contacts():
     """ Show contacts that don't have the main fields filled """
     token = get_token()
