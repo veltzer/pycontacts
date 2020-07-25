@@ -3,7 +3,7 @@ All configurations for pycontacts
 """
 import os
 
-from pytconf.config import Config, ParamCreator
+from pytconf import Config, ParamCreator
 
 
 class ConfigAuthFiles(Config):

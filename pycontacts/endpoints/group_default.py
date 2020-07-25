@@ -11,7 +11,7 @@ from gdata.contacts import ContactEntry
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from pytconf.config import register_endpoint, register_function_group
+from pytconf import register_endpoint, register_function_group
 
 import gdata.data
 import gdata.gauth
