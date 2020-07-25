@@ -53,8 +53,8 @@ def version() -> None:
 
 
 @register_endpoint(configs=[ConfigAuthFiles, ], )
-def list_contacts() -> None:
-    """ List all contacts """
+def dump_contacts() -> None:
+    """ Dump full info for all contacts """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -116,6 +116,7 @@ def show_bad_phones():
                 print("[{}] [{}]".format(get_summary(entry), number.text))
 
 
+# noinspection PyUnresolvedReferences
 def unfilled_contact(entry: ContactEntry) -> bool:
     """
     A contact which is unfilled is one which does not have
@@ -143,7 +144,7 @@ def unfilled_contact(entry: ContactEntry) -> bool:
 
 
 @register_endpoint(configs=[ConfigAuthFiles, ], )
-def dump_unfilled_contacts():
+def unfilled_contacts_show():
     """ Show contacts that don't have the main fields filled """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
@@ -153,8 +154,8 @@ def dump_unfilled_contacts():
 
 
 @register_endpoint(configs=[ConfigAuthFiles, ], )
-def delete_unfilled_contacts():
-    """ Show contacts that don't have the main fields filled """
+def unfilled_contacts_delete():
+    """ Delete contacts that don't have the main fields filled """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
