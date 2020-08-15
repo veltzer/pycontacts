@@ -16,6 +16,7 @@
 ![Downloads](https://pepy.tech/badge/pycontacts/month)
 ![Downloads](https://pepy.tech/badge/pycontacts/week)
 
+
 Actions
 
 ![build](https://github.com/veltzer/pycontacts/workflows/build/badge.svg)
@@ -23,5 +24,7 @@ Actions
 pycontacts is a collection of utilities to help interact with google contacts
 
 project website: <https://veltzer.github.io/pycontacts>
+
+chat with me at [![gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/veltzer/mark.veltzer)
 
 
