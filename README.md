@@ -16,6 +16,8 @@
 ![Downloads](https://pepy.tech/badge/pycontacts/month)
 ![Downloads](https://pepy.tech/badge/pycontacts/week)
 
+[![Known Vulnerabilities](https://snyk.io/test/github/veltzer/pycontacts/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/veltzer/pycontacts?targetFile=requirements.txt)
+
 
 Actions
 
