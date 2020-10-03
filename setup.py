@@ -9,10 +9,9 @@ def get_readme():
 setuptools.setup(
     # the first three fields are a must according to the documentation
     name="pycontacts",
-    version="0.0.10",
+    version="0.0.11",
     packages=[
         'pycontacts',
-        'pycontacts.endpoints',
     ],
     # from here all is optional
     description="pycontacts is a collection of utilities to help interact with google contacts",
@@ -60,7 +59,7 @@ setuptools.setup(
     data_files=[
     ],
     entry_points={"console_scripts": [
-        'pycontacts=pycontacts.endpoints.main:main',
+        'pycontacts=pycontacts.main:main',
     ]},
     python_requires=">=3.6",
 )

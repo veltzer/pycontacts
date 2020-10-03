@@ -3,7 +3,7 @@ import config.project
 package_name = config.project.project_name
 
 console_scripts = [
-    "pycontacts=pycontacts.endpoints.main:main",
+    "pycontacts=pycontacts.main:main",
 ]
 
 setup_requires = []
@@ -21,8 +21,9 @@ run_requires = [
 test_requires = [
     "pylint",  # to check for lint errors
     "pytest",  # for testing
-    "pyflakes",  # for testing
+    "pytest-cov",  # for testing
     "flake8",  # for testing
+    "pymakehelper",  # for make
 ]
 
 dev_requires = [

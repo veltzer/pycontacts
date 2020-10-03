@@ -1,17 +1,18 @@
 """
-The default group of operations that pycontacts has
+main
 """
 import logging
 import os.path
 import pickle
 from typing import Generator, Union
 
+import pylogconf.core
 from gdata.client import RequestError
 from gdata.contacts import ContactEntry
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from pytconf import register_endpoint, register_function_group
+from pytconf import register_endpoint, register_main, config_arg_parse_and_launch
 
 import gdata.data
 import gdata.gauth
@@ -19,42 +20,22 @@ import gdata.contacts.client
 import gdata.contacts.data
 
 import pycontacts
-import pycontacts.version
 from pycontacts.configs import ConfigAuthFiles, ConfigFix
+from pycontacts.static import APP_NAME, DESCRIPTION, VERSION_STR
 
 from pycontacts.utils import dump
-
-GROUP_NAME_DEFAULT = "default"
-GROUP_DESCRIPTION_DEFAULT = "all pycontacts commands"
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = [
     "https://www.googleapis.com/auth/contacts",
 ]
-APP_NAME = "pycontacts"
 
 
-def register_group_default():
-    """
-    register the name and description of this group
-    """
-    register_function_group(
-        function_group_name=GROUP_NAME_DEFAULT,
-        function_group_description=GROUP_DESCRIPTION_DEFAULT,
-    )
-
-
-@register_endpoint(group=GROUP_NAME_DEFAULT, )
-def version() -> None:
-    """
-    Print version
-    """
-    print(pycontacts.version.VERSION_STR)
-
-
-@register_endpoint(configs=[ConfigAuthFiles, ], )
+@register_endpoint(
+    configs=[ConfigAuthFiles],
+    description="Dump full info for all contacts",
+)
 def dump_contacts() -> None:
-    """ Dump full info for all contacts """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -77,9 +58,11 @@ def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
             yield entry
 
 
-@register_endpoint(configs=[ConfigAuthFiles, ConfigFix, ], )
+@register_endpoint(
+    configs=[ConfigAuthFiles, ConfigFix],
+    description="Fix the phone numbers so that parsed form equals presentation form",
+)
 def fix_phones():
-    """ Fix the phone numbers so that parsed form equals presentation form """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -104,9 +87,11 @@ def fix_phones():
                             print("failed to update")
 
 
-@register_endpoint(configs=[ConfigAuthFiles, ], )
+@register_endpoint(
+    configs=[ConfigAuthFiles],
+    description="Show phones that google can't parse or are just weird",
+)
 def show_bad_phones():
-    """ Show phones that google can't parse or are just weird """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -143,9 +128,11 @@ def unfilled_contact(entry: ContactEntry) -> bool:
     return True
 
 
-@register_endpoint(configs=[ConfigAuthFiles, ], )
+@register_endpoint(
+    configs=[ConfigAuthFiles],
+    description="Show contacts that don't have the main fields filled",
+)
 def unfilled_contacts_show():
-    """ Show contacts that don't have the main fields filled """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -153,9 +140,11 @@ def unfilled_contacts_show():
             dump(entry)
 
 
-@register_endpoint(configs=[ConfigAuthFiles, ], )
+@register_endpoint(
+    configs=[ConfigAuthFiles],
+    description="Delete contacts that don't have the main fields filled",
+)
 def unfilled_contacts_delete():
-    """ Delete contacts that don't have the main fields filled """
     token = get_token()
     contacts_client = gdata.contacts.client.ContactsClient(auth_token=token)
     for entry in yield_all_entries(contacts_client):
@@ -231,3 +220,17 @@ def get_summary(entry) -> Union[None, str]:
     if entry.organization is not None:
         show = "organization:{}".format(entry.organization.name.text)
     return show
+
+
+@register_main(
+    main_description=DESCRIPTION,
+    app_name=APP_NAME,
+    version=VERSION_STR,
+)
+def main():
+    pylogconf.core.setup()
+    config_arg_parse_and_launch()
+
+
+if __name__ == "__main__":
+    main()

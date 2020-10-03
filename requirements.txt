@@ -16,5 +16,6 @@ black
 # test requirements
 pylint
 pytest
-pyflakes
+pytest-cov
 flake8
+pymakehelper
