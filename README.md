@@ -12,11 +12,6 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/pycontacts)
 
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
-![Downloads](https://pepy.tech/badge/pycontacts)
-![Downloads](https://pepy.tech/badge/pycontacts/month)
-![Downloads](https://pepy.tech/badge/pycontacts/week)
-
-[![Known Vulnerabilities](https://snyk.io/test/github/veltzer/pycontacts/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/veltzer/pycontacts?targetFile=requirements.txt)
 
 
 Actions
