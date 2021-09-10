@@ -14,7 +14,7 @@
 ![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
 
 ![build](https://github.com/veltzer/pycontacts/workflows/build/badge.svg)
-pycontacts is a collection of utilities to help interact with google contacts
+Interact with google contacts
 
 project website: https://veltzer.github.io/pycontacts
 

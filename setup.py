@@ -14,7 +14,7 @@ setuptools.setup(
         'pycontacts',
     ],
     # from here all is optional
-    description="pycontacts is a collection of utilities to help interact with google contacts",
+    description="Interact with google contacts",
     long_description=get_readme(),
     long_description_content_type="text/x-rst",
     author="Mark Veltzer",
