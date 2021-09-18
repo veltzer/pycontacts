@@ -70,15 +70,11 @@ def fix_phones():
         for i, number in enumerate(numbers):
             if not is_special_phone(entry, number):
                 if number.uri is None:
-                    print(
-                        "problem with [{}] [{}]".format(
-                            get_summary(entry), number.text,
-                        )
-                    )
+                    print(f"problem with [{get_summary(entry)}] [{number.text}]")
                     continue
                 formatted = number.uri.split(":")[1]
                 if number.text != formatted:
-                    print("fixing [{}] ->[{}]".format(number.text, formatted))
+                    print(f"fixing [{number.text}] ->[{formatted}]")
                     if ConfigFix.doit:
                         entry.phone_number[i].text = formatted
                         try:
@@ -98,7 +94,7 @@ def show_bad_phones():
         numbers = entry.phone_number
         for number in numbers:
             if is_bad_phone(entry, number):
-                print("[{}] [{}]".format(get_summary(entry), number.text))
+                print(f"[{get_summary(entry)}] [{number.text}]")
 
 
 # noinspection PyUnresolvedReferences
@@ -216,9 +212,9 @@ def is_special_phone(entry, number) -> bool:
 def get_summary(entry) -> Union[None, str]:
     show = None
     if entry.title.text is not None:
-        show = "title:{}".format(entry.title.text)
+        show = f"title:{entry.title.text}"
     if entry.organization is not None:
-        show = "organization:{}".format(entry.organization.name.text)
+        show = f"organization:{entry.organization.name.text}"
     return show
 
 
