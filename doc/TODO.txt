@@ -1,3 +1,5 @@
+
+- move to the people api - the api this package uses no longer works.
 - move to the new python API from the gdata- API we use now.
 	https://stackoverflow.com/questions/9969204/different-python-google-apis
 	document.
