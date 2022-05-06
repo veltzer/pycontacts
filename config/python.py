@@ -6,8 +6,6 @@ console_scripts = [
     "pycontacts=pycontacts.main:main",
 ]
 
-setup_requires = []
-
 run_requires = [
     "httplib2",
     "google-api-python-client",
@@ -33,12 +31,6 @@ dev_requires = [
     "Sphinx",
     "black",
 ]
-
-install_requires = list(setup_requires)
-install_requires.extend(run_requires)
-
-extras_require = {
-}
 
 python_requires = ">=3.9"
 test_os = ["ubuntu-20.04"]
