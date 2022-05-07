@@ -32,17 +32,6 @@ setuptools.setup(
     platforms=[
         'python3',
     ],
-    install_requires=[
-        'httplib2',
-        'google-api-python-client',
-        'google-auth-httplib2',
-        'google-auth-oauthlib',
-        'gdata-python3',
-        'pytconf',
-        'pylogconf',
-    ],
-    extras_require={
-    },
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
