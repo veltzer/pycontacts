@@ -6,7 +6,7 @@ console_scripts = [
     "pycontacts=pycontacts.main:main",
 ]
 
-run_requires = [
+install_requires = [
     "httplib2",
     "google-api-python-client",
     "google-auth-httplib2",
