@@ -32,6 +32,15 @@ setuptools.setup(
     platforms=[
         'python3',
     ],
+    install_requires=[
+        'httplib2',
+        'google-api-python-client',
+        'google-auth-httplib2',
+        'google-auth-oauthlib',
+        'gdata-python3',
+        'pytconf',
+        'pylogconf',
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
@@ -48,5 +57,5 @@ setuptools.setup(
     entry_points={"console_scripts": [
         'pycontacts=pycontacts.main:main',
     ]},
-    python_requires=">=3.9",
+    python_requires=">=3.10",
 )
