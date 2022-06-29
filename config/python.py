@@ -23,4 +23,5 @@ test_requires = [
     "pytest-cov",
     "flake8",
     "pymakehelper",
+    "mypy",
 ]
