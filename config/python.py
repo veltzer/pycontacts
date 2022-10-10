@@ -2,9 +2,7 @@ console_scripts = [
     "pycontacts=pycontacts.main:main",
 ]
 dev_requires = [
-    "pyclassifiers",
     "pypitools",
-    "pydmt",
     "Sphinx",
     "black",
 ]
@@ -20,6 +18,7 @@ install_requires = [
 make_requires = [
     "pymakehelper",
     "pydmt",
+    "pyclassifiers",
 ]
 test_requires = [
     "pylint",
