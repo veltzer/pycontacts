@@ -9,7 +9,6 @@ pytconf
 pylogconf
 # dev requirements
 pypitools
-Sphinx
 black
 # test requirements
 pylint
