@@ -1,5 +1,5 @@
 """ version which can be consumed from within the module """
-VERSION_STR = "0.0.11"
+VERSION_STR = "0.0.12"
 DESCRIPTION = "Interact with google contacts"
 APP_NAME = "pycontacts"
 LOGGER_NAME = "pycontacts"
