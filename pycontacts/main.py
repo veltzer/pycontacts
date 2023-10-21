@@ -1,16 +1,13 @@
 """
 main
 """
-import logging
-import os.path
-import pickle
 from typing import Generator, Union
 
 import pylogconf.core
 from gdata.client import RequestError
 from gdata.contacts import ContactEntry
-from google.auth.transport.requests import Request
-from google_auth_oauthlib.flow import InstalledAppFlow
+
+from pygooglehelper import register_functions, ConfigRequest, get_credentials
 
 from pytconf import register_endpoint, register_main, config_arg_parse_and_launch
 
@@ -19,7 +16,6 @@ import gdata.gauth
 import gdata.contacts.client
 import gdata.contacts.data
 
-import pycontacts
 from pycontacts.configs import ConfigAuthFiles, ConfigFix
 from pycontacts.static import APP_NAME, DESCRIPTION, VERSION_STR
 
@@ -29,6 +25,19 @@ from pycontacts.utils import dump
 SCOPES = [
     "https://www.googleapis.com/auth/contacts",
 ]
+
+
+def get_token():
+    credentials = get_credentials()
+    token = gdata.gauth.OAuth2Token(
+        client_id=credentials.client_id,
+        client_secret=credentials.client_secret,
+        scope=SCOPES[0],
+        user_agent=APP_NAME,
+        access_token=credentials.token,
+        refresh_token=credentials.refresh_token,
+    )
+    return token
 
 
 @register_endpoint(
@@ -148,43 +157,6 @@ def unfilled_contacts_delete():
             contacts_client.delete(entry)
 
 
-def get_token():
-    logger = logging.getLogger(pycontacts.LOGGER_NAME)
-    credentials = None
-    # The file token.pickle stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.access(ConfigAuthFiles.token, os.R_OK):
-        with open(ConfigAuthFiles.token, "rb") as token:
-            credentials = pickle.load(token)
-    # If there are no (valid) credentials available, let the user log in.
-    if not credentials or not credentials.valid:
-        if credentials and credentials.expired and credentials.refresh_token:
-            credentials.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                ConfigAuthFiles.client_secret, SCOPES
-            )
-            credentials = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        logger.info("creating a new token file")
-        if os.access(ConfigAuthFiles.token, os.R_OK):
-            os.unlink(ConfigAuthFiles.token)
-        with open(ConfigAuthFiles.token, "wb") as token:
-            pickle.dump(credentials, token)
-        os.chmod(ConfigAuthFiles.token, 0o400)
-    # flat_dump(credentials)
-    token = gdata.gauth.OAuth2Token(
-        client_id=credentials.client_id,
-        client_secret=credentials.client_secret,
-        scope=SCOPES[0],
-        user_agent=APP_NAME,
-        access_token=credentials.token,
-        refresh_token=credentials.refresh_token,
-    )
-    return token
-
-
 def is_bad_phone(entry, number) -> bool:
     if number.uri is None:
         if is_special_phone(entry, number):
@@ -225,6 +197,9 @@ def get_summary(entry) -> Union[None, str]:
 )
 def main():
     pylogconf.core.setup()
+    ConfigRequest.app_name = APP_NAME
+    ConfigRequest.scopes = SCOPES
+    register_functions()
     config_arg_parse_and_launch()
 
 

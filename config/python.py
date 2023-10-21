@@ -7,9 +7,8 @@ dev_requires = [
 ]
 install_requires = [
     "httplib2",
-    "google-api-python-client",
-    "google-auth-httplib2",
-    "google-auth-oauthlib",
+    "pygooglehelper",
+    # "google-api-python-client",
     "gdata-python3",
     "pytconf",
     "pylogconf",
