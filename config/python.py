@@ -5,6 +5,7 @@ dev_requires = [
     "pypitools",
     "black",
 ]
+config_requires = []
 install_requires = [
     "httplib2",
     "pygooglehelper",
@@ -25,3 +26,4 @@ test_requires = [
     "flake8",
     "mypy",
 ]
+requires = config_requires + install_requires + make_requires + test_requires
