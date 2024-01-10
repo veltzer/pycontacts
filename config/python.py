@@ -5,10 +5,13 @@ console_scripts: List[str] = [
     "pycontacts=pycontacts.main:main",
 ]
 dev_requires: List[str] = [
+    "pymultigit",
     "pypitools",
     "black",
 ]
-config_requires: List[str] = []
+config_requires: List[str] = [
+    "pyclassifiers",
+]
 install_requires: List[str] = [
     "httplib2",
     "pygooglehelper",
