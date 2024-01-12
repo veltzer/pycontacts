@@ -23,7 +23,6 @@ install_requires: List[str] = [
 make_requires: List[str] = [
     "pymakehelper",
     "pydmt",
-    "pyclassifiers",
 ]
 test_requires: List[str] = [
     "pylint",
