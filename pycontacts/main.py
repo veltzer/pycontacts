@@ -63,8 +63,7 @@ def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
         if len(feed.entry) == 0:
             break
         query.start_index += len(feed.entry)
-        for entry in feed.entry:
-            yield entry
+        yield from feed.entry
 
 
 @register_endpoint(
