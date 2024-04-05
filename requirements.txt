@@ -1,0 +1,14 @@
+# THIS IS AN AUTO-GENERATED FILE. DO NOT EDIT!
+pyclassifiers
+httplib2
+pygooglehelper
+gdata-python3
+pytconf
+pylogconf
+pymakehelper
+pydmt
+pylint
+pytest
+pytest-cov
+flake8
+mypy
