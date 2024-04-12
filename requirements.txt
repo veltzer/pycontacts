@@ -24,7 +24,7 @@ google-auth-httplib2==0.2.0
 google-auth-oauthlib==1.2.0
 googleapis-common-protos==1.63.0
 httplib2==0.22.0
-idna==3.6
+idna==3.7
 imagesize==1.4.1
 importlib_metadata==7.0.2
 iniconfig==2.0.0
