@@ -49,7 +49,7 @@ pydmt==0.3.19
 pyfakeuse==0.0.9
 pyflakes==3.3.2
 Pygments==2.19.1
-pygooglehelper==0.0.7
+pygooglehelper==0.0.8
 pylint==3.3.7
 pylogconf==0.0.38
 pymakehelper==0.0.37

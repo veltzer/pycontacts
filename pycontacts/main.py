@@ -196,8 +196,8 @@ def get_summary(entry) -> Union[None, str]:
 )
 def main():
     pylogconf.core.setup()
-    ConfigRequest.app_name = APP_NAME
     ConfigRequest.scopes = SCOPES
+    ConfigRequest.location = os.path.dirname(os.path.realpath(__file__))
     register_functions()
     config_arg_parse_and_launch()
 

@@ -13,6 +13,9 @@ setuptools.setup(
     packages=[
         "pycontacts",
     ],
+    package_data={
+		"pycontacts": ["*.json"],
+    },
     # from here all is optional
     description="Interact with google contacts",
     long_description=get_readme(),
