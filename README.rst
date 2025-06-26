@@ -12,6 +12,6 @@ project website: https://veltzer.github.io/pycontacts
 
 author: Mark Veltzer
 
-version: 0.0.14
+version: 0.0.15
 
 	Mark Veltzer <mark.veltzer@gmail.com>, Copyright © 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025
