@@ -1,6 +1,7 @@
 """
 main
 """
+import os
 from typing import Generator, Union
 
 import pylogconf.core
