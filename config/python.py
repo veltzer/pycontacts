@@ -1,8 +1,8 @@
 """ python deps for this project """
 
-console_scripts: list[str] = [
-    "pycontacts=pycontacts.main:main",
-]
+scripts: dict[str,str] = {
+    "pycontacts": "pycontacts.main:main",
+}
 config_requires: list[str] = [
     "pyclassifiers",
 ]
