@@ -10,4 +10,4 @@ pylogconf
 pymakehelper
 pytconf
 pytest
-pytest-cov
+ruff
