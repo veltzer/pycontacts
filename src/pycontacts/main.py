@@ -2,7 +2,6 @@
 main
 """
 import os
-from typing import Union
 from collections.abc import Generator
 
 import pylogconf.core
