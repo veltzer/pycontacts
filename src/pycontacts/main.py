@@ -2,7 +2,8 @@
 main
 """
 import os
-from typing import Generator, Union
+from typing import Union
+from collections.abc import Generator
 
 import pylogconf.core
 from gdata.client import RequestError
@@ -181,7 +182,7 @@ def is_special_phone(entry, number) -> bool:
     return False
 
 
-def get_summary(entry) -> Union[None, str]:
+def get_summary(entry) -> None | str:
     show = None
     if entry.title.text is not None:
         show = f"title:{entry.title.text}"
