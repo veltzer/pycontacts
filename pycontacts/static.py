@@ -1,5 +1,0 @@
-""" version which can be consumed from within the module """
-VERSION_STR = "0.0.17"
-DESCRIPTION = "Interact with google contacts"
-APP_NAME = "pycontacts"
-LOGGER_NAME = "pycontacts"
