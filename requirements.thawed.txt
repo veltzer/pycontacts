@@ -3,6 +3,7 @@ gdata-python3
 hatch
 httplib2
 mypy
+pyclassifiers
 pycmdtools
 pydmt
 pygooglehelper
