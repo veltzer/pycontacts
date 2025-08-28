@@ -1,6 +1,6 @@
 """
 This is a generic object dumper for debugging purposes.
-It's funny I have not found a good implementation of this...
+Its funny I have not found a good implementation of this...
 See the links for discussions of this topic.
 
 References:

@@ -94,7 +94,7 @@ def fix_phones():
 
 @register_endpoint(
     configs=[ConfigAuthFiles],
-    description="Show phones that google can't parse or are just weird",
+    description="Show phones that google cant parse or are just weird",
 )
 def show_bad_phones():
     token = get_token()
@@ -135,7 +135,7 @@ def unfilled_contact(entry: ContactEntry) -> bool:
 
 @register_endpoint(
     configs=[ConfigAuthFiles],
-    description="Show contacts that don't have the main fields filled",
+    description="Show contacts that dont have the main fields filled",
 )
 def unfilled_contacts_show():
     token = get_token()
@@ -147,7 +147,7 @@ def unfilled_contacts_show():
 
 @register_endpoint(
     configs=[ConfigAuthFiles],
-    description="Delete contacts that don't have the main fields filled",
+    description="Delete contacts that dont have the main fields filled",
 )
 def unfilled_contacts_delete():
     token = get_token()
