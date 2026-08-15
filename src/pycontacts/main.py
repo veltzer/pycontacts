@@ -4,22 +4,18 @@ main
 import os
 from collections.abc import Generator
 
+import gdata.contacts.client
+import gdata.contacts.data
+import gdata.data
+import gdata.gauth
 import pylogconf.core
 from gdata.client import RequestError
 from gdata.contacts import ContactEntry
-
-from pygooglehelper import register_functions, ConfigRequest, get_credentials
-
-from pytconf import register_endpoint, register_main, config_arg_parse_and_launch
-
-import gdata.data
-import gdata.gauth
-import gdata.contacts.client
-import gdata.contacts.data
+from pygooglehelper import ConfigRequest, get_credentials, register_functions
+from pytconf import config_arg_parse_and_launch, register_endpoint, register_main
 
 from pycontacts.configs import ConfigAuthFiles, ConfigFix
 from pycontacts.static import APP_NAME, DESCRIPTION, VERSION_STR
-
 from pycontacts.utils import dump
 
 # If modifying these scopes, delete the file token.pickle.
@@ -114,22 +110,18 @@ def unfilled_contact(entry: ContactEntry) -> bool:
     :param entry:
     :return:
     """
-    if entry.email is not None:
-        if len(entry.email) >= 1:
-            if entry.email[0].address is not None:
-                return False
+    if entry.email is not None and len(entry.email) >= 1 and entry.email[0].address is not None:
+        return False
     if entry.name is not None:
         if entry.name.given_name is not None:
             return False
         if entry.name.family_name is not None:
             return False
     if entry.organization is not None:
-        if entry.organization.name is not None:
-            if entry.organization.name.text is not None:
-                return False
-        if entry.organization.department is not None:
-            if entry.organization.department.text is not None:
-                return False
+        if entry.organization.name is not None and entry.organization.name.text is not None:
+            return False
+        if entry.organization.department is not None and entry.organization.department.text is not None:
+            return False
     return True
 
 
@@ -159,9 +151,7 @@ def unfilled_contacts_delete():
 
 def is_bad_phone(entry, number) -> bool:
     if number.uri is None:
-        if is_special_phone(entry, number):
-            return False
-        return True
+        return not is_special_phone(entry, number)
     return False
 
 
@@ -172,13 +162,11 @@ def is_special_phone(entry, number) -> bool:
         and 4 <= len(number.text) <= 5
     ):
         return True
-    if (
+    return (
         entry.organization is not None
         and number.text.startswith("1")
         and len(number.text) == 3
-    ):
-        return True
-    return False
+    )
 
 
 def get_summary(entry) -> None | str:
