@@ -5,3 +5,4 @@ KEYWORDS = {
     "contacts",
     "python",
 }
+PYPI = true
