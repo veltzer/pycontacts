@@ -1,7 +1,6 @@
 """
 main
 """
-import os
 from collections.abc import Generator
 
 import gdata.contacts.client
@@ -186,7 +185,7 @@ def get_summary(entry) -> None | str:
 def main():
     pylogconf.core.setup()
     ConfigRequest.scopes = SCOPES
-    ConfigRequest.location = os.path.dirname(os.path.realpath(__file__))
+    ConfigRequest.app_name = APP_NAME
     register_functions()
     config_arg_parse_and_launch()
 

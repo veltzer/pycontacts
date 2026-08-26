@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pycontacts"
-version = "0.0.17"
+version = "0.0.18"
 requires-python = ">=3.12"
 authors = [
 	{ name = "Mark Veltzer", email = "mark.veltzer@gmail.com" }
@@ -55,10 +55,18 @@ line-length = 130
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/pycontacts"]
+# client_secret.json is gitignored (GitHub push protection blocks OAuth
+# secrets), but it must ship in the distribution so `pip install pycontacts`
+# works with no setup. "artifacts" overrides the VCS-ignore exclusion.
+artifacts = ["src/pycontacts/client_secret.json"]
 
 [tool.hatch.build.targets.sdist]
+artifacts = ["src/pycontacts/client_secret.json"]
 include = [
     "src/pycontacts/",
     "README.md",
