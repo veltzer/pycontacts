@@ -32,10 +32,6 @@ src_dirs = ["src", "config", "tests"]
 [processor.mypy]
 src_dirs = ["src", "config", "tests"]
 
-[processor.requirements]
-src_dirs = ["src", "config", "tests"]
-enabled = false
-
 [processor.pytest]
 src_dirs = ["tests"]
 
@@ -46,13 +42,3 @@ src_dirs = ["config"]
 
 [processor.taplo]
 src_dirs = ["."]
-
-# Runtime deps so CI (rsconstruct tools install-deps) can run pytest.
-[dependencies]
-pip = [
-    "httplib2",
-    "pygooglehelper",
-    "gdata-python3",
-    "pytconf",
-    "pylogconf",
-]
