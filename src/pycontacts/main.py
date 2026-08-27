@@ -47,7 +47,7 @@ def dump_contacts() -> None:
         dump(entry)
 
 
-def yield_all_entries(contacts_client) -> Generator[ContactEntry, None, None]:
+def yield_all_entries(contacts_client) -> Generator[ContactEntry]:
     query = gdata.contacts.client.ContactsQuery()
     # see all parameters in :py:class:`gdata.query.ContactsQuery`
     query.strict = True
