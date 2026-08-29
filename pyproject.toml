@@ -39,6 +39,14 @@ dependencies = [
     "pylogconf",
 ]
 
+[dependency-groups]
+dev = [
+    "mypy",
+    "pylint",
+    "pytest",
+    "ruff",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/veltzer/pycontacts"
 "Bug Tracker" = "https://github.com/veltzer/pycontacts/issues"
